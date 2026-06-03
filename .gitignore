@@ -1,0 +1,16 @@
+# Ignore raw and cleaned datasets (they are >100MB and will block GitHub pushes)
+*.csv
+
+# Ignore large preprocessed sparse feature matrices and labels
+processed_data/
+
+# Ignore local trained models and vectorizers
+models/
+
+# Ignore python compile caches
+__pycache__/
+*.pyc
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
