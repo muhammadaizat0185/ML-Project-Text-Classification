@@ -12,7 +12,7 @@ The system workflow is designed as a modular pipeline to guarantee data cleanlin
 
 ```mermaid
 graph TD
-    A[Raw Dataset: train_v4_drcat_01.csv] --> B(clean_dataset.py)
+    A[Raw Dataset: train_v4_drcat_01.csv] --> B(src/clean_dataset.py)
     B -->|Filtered Data| C[train_v4_drcat_01_cleaned.csv]
     C --> D(src/preprocess.py)
     D -->|Stratified 5-Fold Split| E{Fold Iteration 0 to 4}
@@ -25,7 +25,7 @@ graph TD
 ```
 
 ### System Workflow Details:
-1. **Data Cleaning (`clean_dataset.py`)**: Loads the raw essays, normalizes whitespaces, and removes corrupted or short entries (fewer than 100 words, which are typically prompt titles rather than complete essays).
+1. **Data Cleaning (`src/clean_dataset.py`)**: Loads the raw essays, normalizes whitespaces, and removes corrupted or short entries (fewer than 100 words, which are typically prompt titles rather than complete essays).
 2. **Stratified 5-Fold Splitting (`src/preprocess.py`)**: Splitting is done using a Stratified K-Fold with 5 splits (which naturally splits the data into 80% train and 20% test per iteration). This preserves the label distribution (62.5% AI and 37.5% human text) across all folds.
 3. **Out-of-Fold Preprocessing (`src/preprocess.py`)**: TF-IDF vectorizers are fit **exclusively** on the training fold of each iteration and used to transform both the train and test subsets of that fold. This ensures **zero data leakage** during model training.
 4. **Independent Training and Global OOF Evaluation (`src/memberX.py`)**: Each group member trains their model on the 5 folds. The predicted probabilities are accumulated across all folds to reconstruct out-of-fold predictions for the entire dataset, which are then used to tune the model's decision threshold for high specificity.
@@ -58,7 +58,7 @@ To run the entire pipeline from scratch, execute the scripts in the following or
 
 ### Step 1: Clean the Dataset
 ```bash
-python clean_dataset.py
+python src/clean_dataset.py
 ```
 * **Purpose**: Removes corrupted/truncated text (essays with word count < 100) and normalizes whitespaces.
 * **Input**: `train_v4_drcat_01.csv` (raw dataset)
