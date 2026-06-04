@@ -74,3 +74,51 @@ The system is built to classify academic essays as either **Human-Written** or *
    ```bash
    python src/member1_logistic.py
    ```
+
+---
+
+## 5. Empirical Evaluation Results (Logistic Regression Benchmark)
+
+### A. Fold-by-Fold Performance (Default Threshold = 0.5)
+The dataset was split into 5 stratified folds. The model shows extremely consistent performance across all folds, indicating high generalization stability:
+* **Fold 0**: Accuracy: **98.31%** | F1-Score: **0.9864** | ROC-AUC: **0.9982** | FPR: **0.840%**
+* **Fold 1**: Accuracy: **98.12%** | F1-Score: **0.9848** | ROC-AUC: **0.9975** | FPR: **1.060%**
+* **Fold 2**: Accuracy: **98.08%** | F1-Score: **0.9845** | ROC-AUC: **0.9977** | FPR: **1.352%**
+* **Fold 3**: Accuracy: **98.21%** | F1-Score: **0.9855** | ROC-AUC: **0.9980** | FPR: **1.060%**
+* **Fold 4**: Accuracy: **98.12%** | F1-Score: **0.9848** | ROC-AUC: **0.9976** | FPR: **1.188%**
+
+---
+
+### B. Global Out-of-Fold (OOF) Comparison
+Below is the comparison of the global OOF metrics on all 72,991 essays under the default decision threshold and the optimized academic integrity threshold.
+
+| Metric | Default Threshold (0.5) | Tuned Threshold (0.817) | Impact / Rationale |
+| :--- | :--- | :--- | :--- |
+| **Decision Threshold** | `0.500` | `0.817` | Threshold is shifted higher to protect students. |
+| **Accuracy** | **98.166%** | **96.195%** | Minor drop in accuracy to ensure safety. |
+| **F1-Score** | **0.9852** | **0.9686** | High balanced score maintained. |
+| **ROC-AUC** | **0.9978** | **0.9978** | Unchanged (reflects model discrimination capacity). |
+| **Precision** | **99.329%** | **99.937%** | Higher precision means almost zero false flags. |
+| **Recall (Detection)** | **97.725%** | **93.973%** | Detection remains high; catches ~94% of AI text. |
+| **Specificity** | **98.900%** | **99.901%** | Human essays correctly classified increases to 99.9%. |
+| **False Positive Rate** | **1.100%** *(HIGH RISK)* | **0.099%** *(SAFE)* | **FPR reduced below target of 0.1%**. |
+| **False Accusations (Count)**| **301 essays** | **27 essays** | **FPR reduced by 91.03% (274 fewer false accusations)**. |
+
+---
+
+### C. Confusion Matrices
+
+#### 1. Default Threshold (0.5)
+```text
+                  Predicted Human  |  Predicted AI
+Actual Human          27,062       |      301       <-- Falsely Accused
+Actual AI              1,038       |   44,590       <-- Detected AI
+```
+
+#### 2. Tuned Threshold (0.817)
+```text
+                  Predicted Human  |  Predicted AI
+Actual Human          27,336       |       27       <-- Falsely Accused (91% reduction!)
+Actual AI              2,750       |   42,878       <-- Detected AI
+```
+
