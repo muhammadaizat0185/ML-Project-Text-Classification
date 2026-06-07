@@ -14,3 +14,26 @@ __pycache__/
 # Ignore OS files
 .DS_Store
 Thumbs.db
+
+# Ignore Word document intermediate backups
+Full Report_backup.docx
+Full Report_final.docx
+Full Report_updated.docx
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore virtual environments
+venv/
+.venv/
+env/
+
+# Ignore local IDE settings
+.vscode/
+.idea/
+
+# Ignore compressed archives
+*.rar
+*.zip
+*.7z
+*.tar.gz

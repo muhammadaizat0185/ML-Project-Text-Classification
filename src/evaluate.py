@@ -109,6 +109,55 @@ def tune_decision_threshold(y_true, y_prob, target_fpr=0.001):
         fallback_pred = (y_prob >= 0.99).astype(int)
         return 0.99, calculate_metrics(y_true, fallback_pred, y_prob)
 
+
+def plot_global_evaluation(y_true, y_prob, threshold, model_name, filename_prefix):
+    """
+    Plots the global Out-of-Fold ROC Curve (with AUC) and Confusion Matrix (tuned threshold)
+    and saves them to the results/ folder.
+    """
+    import os
+    from sklearn.metrics import roc_curve, confusion_matrix, auc
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    
+    # Create results dir if not exists
+    os.makedirs("results", exist_ok=True)
+    
+    # 1. Confusion Matrix
+    y_pred = (y_prob >= threshold).astype(int)
+    cm = confusion_matrix(y_true, y_pred)
+    
+    plt.figure(figsize=(6, 5))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Human', 'AI'], yticklabels=['Human', 'AI'])
+    plt.title(f"{model_name} Confusion Matrix\n(Tuned Threshold = {threshold:.3f})")
+    plt.xlabel("Predicted Label")
+    plt.ylabel("Actual Label")
+    plt.tight_layout()
+    cm_path = f"results/{filename_prefix}_confusion_matrix.png"
+    plt.savefig(cm_path, dpi=150)
+    plt.close()
+    
+    # 2. ROC Curve
+    fpr, tpr, _ = roc_curve(y_true, y_prob)
+    roc_auc = auc(fpr, tpr)
+    
+    plt.figure(figsize=(6, 5))
+    plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {roc_auc:.4f})')
+    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title(f'{model_name} ROC Curve (Global OOF)')
+    plt.legend(loc="lower right")
+    plt.tight_layout()
+    roc_path = f"results/{filename_prefix}_roc_curve.png"
+    plt.savefig(roc_path, dpi=150)
+    plt.close()
+    
+    print(f"Saved evaluation plots for {model_name} to results/")
+
+
 if __name__ == "__main__":
     # Quick sanity test with dummy data
     y_test = np.array([0, 0, 0, 0, 1, 1, 1, 1])

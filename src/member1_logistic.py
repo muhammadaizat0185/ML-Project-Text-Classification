@@ -104,6 +104,45 @@ def train_logistic_regression(data_dir, models_dir):
     target_fpr = 0.001
     best_threshold, tuned_metrics = tune_decision_threshold(oof_y_true, oof_y_prob, target_fpr=target_fpr)
     print_evaluation_report(f"Logistic Regression (Global OOF - Tuned Threshold @ {best_threshold:.3f})", tuned_metrics)
+    
+    # Generate and save comparative plots (confusion matrix & ROC curve)
+    from evaluate import plot_global_evaluation
+    plot_global_evaluation(oof_y_true, oof_y_prob, best_threshold, "Logistic Regression", "logistic")
+    
+    # Save results to json summary matching the format of other models
+    OUTPUT_DIR = "results"
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    summary_path = os.path.join(OUTPUT_DIR, "logistic_cross_fold_summary.json")
+    
+    metrics_keys = ["accuracy", "f1_score", "auc_roc", "precision",
+                    "recall", "specificity", "false_positive_rate"]
+    
+    summary_export = []
+    for fold, fm in enumerate(fold_metrics_list):
+        y_prob_fold = oof_probs[fold]
+        y_test_fold = oof_labels[fold]
+        tuned_fm = calculate_metrics(y_test_fold, (y_prob_fold >= best_threshold).astype(int), y_prob_fold)
+        summary_export.append({
+            "fold": fold,
+            "best_threshold": best_threshold,
+            "cv_auc": fm["auc_roc"],
+            "metrics_default": {k: fm[k] for k in metrics_keys},
+            "metrics_tuned": {k: tuned_fm[k] for k in metrics_keys},
+        })
+        
+    global_results = {
+        "model_name": "Logistic Regression",
+        "global_default": {k: oof_default_metrics[k] for k in metrics_keys},
+        "global_tuned": {k: tuned_metrics[k] for k in metrics_keys},
+        "global_tuned_threshold": best_threshold,
+        "fold_results": summary_export
+    }
+    
+    import json
+    with open(summary_path, "w") as f:
+        json.dump(global_results, f, indent=4)
+    print(f"\nCross-fold summary saved -> {summary_path}")
+
 
 
 if __name__ == "__main__":
@@ -111,3 +150,5 @@ if __name__ == "__main__":
     MODELS_DIR = "models"
     
     train_logistic_regression(DATA_DIR, MODELS_DIR)
+
+

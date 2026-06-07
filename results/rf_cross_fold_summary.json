@@ -1,0 +1,134 @@
+{
+    "model_name": "Random Forest",
+    "global_default": {
+        "accuracy": 0.9613102985299558,
+        "f1_score": 0.9687686624936409,
+        "auc_roc": 0.9930794739614384,
+        "precision": 0.977787203643345,
+        "recall": 0.9599149644954852,
+        "specificity": 0.9636370281036436,
+        "false_positive_rate": 0.03636297189635639
+    },
+    "global_tuned": {
+        "accuracy": 0.8914386705210231,
+        "f1_score": 0.9049674989805954,
+        "auc_roc": 0.9930794739614384,
+        "precision": 0.999337818509297,
+        "recall": 0.8268826159375822,
+        "specificity": 0.9990863574900413,
+        "false_positive_rate": 0.0009136425099587034
+    },
+    "global_tuned_threshold": 0.758,
+    "fold_results": [
+        {
+            "fold": 0,
+            "best_threshold": 0.745,
+            "metrics_default": {
+                "accuracy": 0.9614357147749846,
+                "f1_score": 0.9688726709791563,
+                "auc_roc": 0.9933635119653195,
+                "precision": 0.9777926570695235,
+                "recall": 0.9601139601139601,
+                "specificity": 0.963639685729947,
+                "false_positive_rate": 0.036360314270052985
+            },
+            "metrics_tuned": {
+                "accuracy": 0.8994451674772245,
+                "f1_score": 0.9125878289865428,
+                "auc_roc": 0.9933635119653195,
+                "precision": 0.9993479394887845,
+                "recall": 0.8396888012272627,
+                "specificity": 0.9990864242645715,
+                "false_positive_rate": 0.0009135757354284671
+            }
+        },
+        {
+            "fold": 1,
+            "best_threshold": 0.76,
+            "metrics_default": {
+                "accuracy": 0.9625291135772024,
+                "f1_score": 0.9696902532276833,
+                "auc_roc": 0.9932591025933037,
+                "precision": 0.9807218112530822,
+                "recall": 0.958904109589041,
+                "specificity": 0.9685729947012607,
+                "false_positive_rate": 0.03142700529873926
+            },
+            "metrics_tuned": {
+                "accuracy": 0.8903959446499521,
+                "f1_score": 0.9039615846338536,
+                "auc_roc": 0.9932591025933037,
+                "precision": 0.9993364299933643,
+                "recall": 0.8252054794520548,
+                "specificity": 0.9990864242645715,
+                "false_positive_rate": 0.0009135757354284671
+            }
+        },
+        {
+            "fold": 2,
+            "best_threshold": 0.772,
+            "metrics_default": {
+                "accuracy": 0.9586244691053569,
+                "f1_score": 0.9666150784877294,
+                "auc_roc": 0.9926293010019298,
+                "precision": 0.9751310360209657,
+                "recall": 0.9582465753424657,
+                "specificity": 0.9592545221998904,
+                "false_positive_rate": 0.04074547780010963
+            },
+            "metrics_tuned": {
+                "accuracy": 0.8794355391149472,
+                "f1_score": 0.8933333333333333,
+                "auc_roc": 0.9926293010019298,
+                "precision": 0.9993220338983051,
+                "recall": 0.8076712328767123,
+                "specificity": 0.9990864242645715,
+                "false_positive_rate": 0.0009135757354284671
+            }
+        },
+        {
+            "fold": 3,
+            "best_threshold": 0.762,
+            "metrics_default": {
+                "accuracy": 0.9619125907658583,
+                "f1_score": 0.9692851618605679,
+                "auc_roc": 0.9931594655011772,
+                "precision": 0.9773841354723708,
+                "recall": 0.9613193074731536,
+                "specificity": 0.9629020467836257,
+                "false_positive_rate": 0.03709795321637427
+            },
+            "metrics_tuned": {
+                "accuracy": 0.8917659953418277,
+                "f1_score": 0.9052871358350317,
+                "auc_roc": 0.9931594655011772,
+                "precision": 0.9993382742191635,
+                "recall": 0.8274161735700197,
+                "specificity": 0.9990862573099415,
+                "false_positive_rate": 0.0009137426900584795
+            }
+        },
+        {
+            "fold": 4,
+            "best_threshold": 0.754,
+            "metrics_default": {
+                "accuracy": 0.9620495958350459,
+                "f1_score": 0.969382115618437,
+                "auc_roc": 0.9929769572636755,
+                "precision": 0.977921498661909,
+                "recall": 0.9609905763751918,
+                "specificity": 0.9638157894736842,
+                "false_positive_rate": 0.03618421052631579
+            },
+            "metrics_tuned": {
+                "accuracy": 0.8934785587066721,
+                "f1_score": 0.9069252409169809,
+                "auc_roc": 0.9929769572636755,
+                "precision": 0.9993404564041684,
+                "recall": 0.8301555993863686,
+                "specificity": 0.9990862573099415,
+                "false_positive_rate": 0.0009137426900584795
+            }
+        }
+    ]
+}

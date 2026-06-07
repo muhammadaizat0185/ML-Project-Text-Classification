@@ -75,50 +75,49 @@ The system is built to classify academic essays as either **Human-Written** or *
    python src/member1_logistic.py
    ```
 
+## 5. Empirical Evaluation & Comparative Model Results
+
+This section compares the global Out-of-Fold (OOF) performance of all four machine learning models evaluated across the 5-fold cross-validation pipeline. Models were evaluated under two settings:
+1. **Default Threshold (0.5)**: General classification capability.
+2. **Academic Integrity Safety Threshold (Tuned)**: Optimization targeting a False Positive Rate (FPR) $\le 0.1\%$ to protect students from false accusations.
+
+### A. Global Out-of-Fold (OOF) Comparative Matrix
+
+Below is the comparative performance of all classifiers on the 72,991 cleaned essays:
+
+| Model | Setting | Threshold | Accuracy | F1-Score | ROC-AUC | Precision | Recall (Detection) | Specificity | FPR |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Logistic Regression** | Default | `0.500` | 98.17% | 0.9852 | 0.9978 | 99.33% | 97.73% | 98.90% | 1.100% |
+| | **Tuned** | **`0.817`** | **96.20%** | **0.9686** | **0.9978** | **99.94%** | **93.97%** | **99.90%** | **0.099%** |
+| **Support Vector Machine (LinearSVC)**| Default | `0.500` | 98.47% | 0.9878 | 0.9984 | 98.94% | 98.61% | 98.24% | 1.760% |
+| | **Tuned** | **`0.993`** | **97.11%** | **0.9763** | **0.9984** | **99.95%** | **95.42%** | **99.92%** | **0.080%** |
+| **Random Forest** | Default | `0.500` | 96.13% | 0.9688 | 0.9931 | 97.78% | 95.99% | 96.36% | 3.640% |
+| | **Tuned** | **`0.758`** | **89.14%** | **0.9050** | **0.9931** | **99.93%** | **82.69%** | **99.91%** | **0.091%** |
+| **Multinomial Naive Bayes** | Default | `0.500` | 89.84% | 0.9144 | 0.9639 | 96.55% | 86.84% | 94.83% | 5.170% |
+| | **Tuned** | **`0.983`** | **37.49%** | **0.0000** | **0.9639** | **0.00%** | **0.00%** | **100.00%** | **0.000%** |
+
+### B. Analytical Takeaways & Model Comparisons
+
+1. **Top Performer: Support Vector Machine (LinearSVC)**
+   * **Why**: Achieves the highest ROC-AUC (**0.9984**) and retains the best **Recall (95.42%)** under the strict FPR constraint (tuned threshold at 0.993). This means it flags over 95% of AI text while falsely accusing only 8 out of every 10,000 human-written essays.
+2. **Strong Alternative: Logistic Regression**
+   * **Why**: A close second to the SVM, achieving **93.97% Recall** at a tuned threshold of 0.817 (FPR = 0.099%). It features slightly faster inference and less complex calibration since it produces direct probability scores.
+3. **Moderate Option: Random Forest**
+   * **Why**: Good general classification performance at the default threshold, but drops to **82.69% Recall** when tuned to enforce the 0.1% FPR safety ceiling. Its high-dimensional sparse tree traversal makes it resource-intensive relative to linear models.
+4. **Unsuited Classifier: Multinomial Naive Bayes**
+   * **Why**: The independence assumption of Naive Bayes causes its probability estimations to be extremely poorly calibrated and compressed. Under the strict FPR <= 0.1% requirement, Platt scaling calibration collapses, forcing a high threshold (~0.983) that renders the classifier useless with **0.00% Recall** (detecting 0 AI essays).
+
 ---
 
-## 5. Empirical Evaluation Results (Logistic Regression Benchmark)
+## 6. Project Architecture Verification Status
 
-### A. Fold-by-Fold Performance (Default Threshold = 0.5)
-The dataset was split into 5 stratified folds. The model shows extremely consistent performance across all folds, indicating high generalization stability:
-* **Fold 0**: Accuracy: **98.31%** | F1-Score: **0.9864** | ROC-AUC: **0.9982** | FPR: **0.840%**
-* **Fold 1**: Accuracy: **98.12%** | F1-Score: **0.9848** | ROC-AUC: **0.9975** | FPR: **1.060%**
-* **Fold 2**: Accuracy: **98.08%** | F1-Score: **0.9845** | ROC-AUC: **0.9977** | FPR: **1.352%**
-* **Fold 3**: Accuracy: **98.21%** | F1-Score: **0.9855** | ROC-AUC: **0.9980** | FPR: **1.060%**
-* **Fold 4**: Accuracy: **98.12%** | F1-Score: **0.9848** | ROC-AUC: **0.9976** | FPR: **1.188%**
+All components of the pipeline have been updated, executed, and validated:
 
----
-
-### B. Global Out-of-Fold (OOF) Comparison
-Below is the comparison of the global OOF metrics on all 72,991 essays under the default decision threshold and the optimized academic integrity threshold.
-
-| Metric | Default Threshold (0.5) | Tuned Threshold (0.817) | Impact / Rationale |
-| :--- | :--- | :--- | :--- |
-| **Decision Threshold** | `0.500` | `0.817` | Threshold is shifted higher to protect students. |
-| **Accuracy** | **98.166%** | **96.195%** | Minor drop in accuracy to ensure safety. |
-| **F1-Score** | **0.9852** | **0.9686** | High balanced score maintained. |
-| **ROC-AUC** | **0.9978** | **0.9978** | Unchanged (reflects model discrimination capacity). |
-| **Precision** | **99.329%** | **99.937%** | Higher precision means almost zero false flags. |
-| **Recall (Detection)** | **97.725%** | **93.973%** | Detection remains high; catches ~94% of AI text. |
-| **Specificity** | **98.900%** | **99.901%** | Human essays correctly classified increases to 99.9%. |
-| **False Positive Rate** | **1.100%** *(HIGH RISK)* | **0.099%** *(SAFE)* | **FPR reduced below target of 0.1%**. |
-| **False Accusations (Count)**| **301 essays** | **27 essays** | **FPR reduced by 91.03% (274 fewer false accusations)**. |
-
----
-
-### C. Confusion Matrices
-
-#### 1. Default Threshold (0.5)
-```text
-                  Predicted Human  |  Predicted AI
-Actual Human          27,062       |      301       <-- Falsely Accused
-Actual AI              1,038       |   44,590       <-- Detected AI
-```
-
-#### 2. Tuned Threshold (0.817)
-```text
-                  Predicted Human  |  Predicted AI
-Actual Human          27,336       |       27       <-- Falsely Accused (91% reduction!)
-Actual AI              2,750       |   42,878       <-- Detected AI
-```
-
+* **Data Cleaning**: Done and checked.
+* **Stratified 5-Fold Splitting & TF-IDF Extraction**: Done and checked.
+* **All Models Trained & Evaluated**:
+  * Logistic Regression: Trained and saved to `models/fold_i/logistic_regression_model.joblib`
+  * Support Vector Machine: Trained and saved to `models/fold_i/svm_model.joblib`
+  * Multinomial Naive Bayes: Trained and saved to `models/fold_i/mnb_model.joblib`
+  * Random Forest: Trained and saved to `models/fold_i/random_forest_model.joblib`
+* **Reports and Artifacts Generated**: Cross-fold metrics and confusion plots are saved in the `results/` subdirectory.

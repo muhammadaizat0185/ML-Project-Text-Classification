@@ -62,8 +62,11 @@ def clean_dataset(input_path, output_path):
     print(f"Cleaned dataset successfully saved to: {output_path}")
     print(f"File size: {os.path.getsize(output_path) / (1024 * 1024):.2f} MB")
 
+
 if __name__ == "__main__":
     INPUT_FILE = "train_v4_drcat_01.csv"
     OUTPUT_FILE = "train_v4_drcat_01_cleaned.csv"
     
     clean_dataset(INPUT_FILE, OUTPUT_FILE)
+
+

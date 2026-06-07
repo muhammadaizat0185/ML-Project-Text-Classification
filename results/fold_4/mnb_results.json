@@ -1,0 +1,38 @@
+{
+    "fold": 4,
+    "best_params": {
+        "alpha": 10.0,
+        "fit_prior": true
+    },
+    "best_threshold": 0.983,
+    "metrics_default": {
+        "accuracy": 0.9001233045622689,
+        "f1_score": 0.9161201242664826,
+        "precision": 0.9643895348837209,
+        "recall": 0.8724523339907956,
+        "specificity": 0.9462719298245614,
+        "false_positive_rate": 0.0537280701754386,
+        "auc_roc": 0.9645686709972023
+    },
+    "metrics_tuned": {
+        "accuracy": 0.374845869297164,
+        "f1_score": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "specificity": 1.0,
+        "false_positive_rate": 0.0,
+        "auc_roc": 0.9645686709972023
+    },
+    "confusion_matrix_default": {
+        "tn": 5178,
+        "fp": 294,
+        "fn": 1164,
+        "tp": 7962
+    },
+    "confusion_matrix_tuned": {
+        "tn": 5472,
+        "fp": 0,
+        "fn": 9126,
+        "tp": 0
+    }
+}

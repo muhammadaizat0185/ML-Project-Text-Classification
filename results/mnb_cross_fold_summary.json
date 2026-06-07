@@ -1,0 +1,137 @@
+[
+    {
+        "fold": 0,
+        "best_params": {
+            "alpha": 10.0,
+            "fit_prior": true
+        },
+        "best_threshold": 0.982,
+        "cv_auc": 0.8166705527856549,
+        "metrics_default": {
+            "accuracy": 0.9007466264812658,
+            "f1_score": 0.9167480609020396,
+            "auc_roc": 0.9653212416989841,
+            "precision": 0.9636429520473487,
+            "recall": 0.8742055665132589,
+            "specificity": 0.9450027407272062,
+            "false_positive_rate": 0.05499725927279372
+        },
+        "metrics_tuned": {
+            "accuracy": 0.3748886910062333,
+            "f1_score": 0.0,
+            "auc_roc": 0.9653212416989841,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "false_positive_rate": 0.0
+        }
+    },
+    {
+        "fold": 1,
+        "best_params": {
+            "alpha": 10.0,
+            "fit_prior": false
+        },
+        "best_threshold": 0.986,
+        "cv_auc": 0.8166172577512274,
+        "metrics_default": {
+            "accuracy": 0.8985477462666118,
+            "f1_score": 0.9143286862960607,
+            "auc_roc": 0.9628342773615934,
+            "precision": 0.9682675814751286,
+            "recall": 0.8660821917808219,
+            "specificity": 0.9526767769048055,
+            "false_positive_rate": 0.04732322309519459
+        },
+        "metrics_tuned": {
+            "accuracy": 0.3749143718317578,
+            "f1_score": 0.0,
+            "auc_roc": 0.9628342773615934,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "false_positive_rate": 0.0
+        }
+    },
+    {
+        "fold": 2,
+        "best_params": {
+            "alpha": 10.0,
+            "fit_prior": true
+        },
+        "best_threshold": 0.982,
+        "cv_auc": 0.8181954859483501,
+        "metrics_default": {
+            "accuracy": 0.8905329497191397,
+            "f1_score": 0.9076514100785945,
+            "auc_roc": 0.9608896675835796,
+            "precision": 0.9601418266291722,
+            "recall": 0.8606027397260274,
+            "specificity": 0.940434862050064,
+            "false_positive_rate": 0.05956513794993605
+        },
+        "metrics_tuned": {
+            "accuracy": 0.3749143718317578,
+            "f1_score": 0.0,
+            "auc_roc": 0.9608896675835796,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "false_positive_rate": 0.0
+        }
+    },
+    {
+        "fold": 3,
+        "best_params": {
+            "alpha": 10.0,
+            "fit_prior": false
+        },
+        "best_threshold": 0.986,
+        "cv_auc": 0.8182157349917274,
+        "metrics_default": {
+            "accuracy": 0.9018358679271133,
+            "f1_score": 0.9171245156439767,
+            "auc_roc": 0.9661247770011265,
+            "precision": 0.9710961420698102,
+            "recall": 0.868836291913215,
+            "specificity": 0.9568713450292398,
+            "false_positive_rate": 0.04312865497076023
+        },
+        "metrics_tuned": {
+            "accuracy": 0.374845869297164,
+            "f1_score": 0.0,
+            "auc_roc": 0.9661247770011265,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "false_positive_rate": 0.0
+        }
+    },
+    {
+        "fold": 4,
+        "best_params": {
+            "alpha": 10.0,
+            "fit_prior": true
+        },
+        "best_threshold": 0.983,
+        "cv_auc": 0.8179370075958948,
+        "metrics_default": {
+            "accuracy": 0.9001233045622689,
+            "f1_score": 0.9161201242664826,
+            "auc_roc": 0.9645686709972023,
+            "precision": 0.9643895348837209,
+            "recall": 0.8724523339907956,
+            "specificity": 0.9462719298245614,
+            "false_positive_rate": 0.0537280701754386
+        },
+        "metrics_tuned": {
+            "accuracy": 0.374845869297164,
+            "f1_score": 0.0,
+            "auc_roc": 0.9645686709972023,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "false_positive_rate": 0.0
+        }
+    }
+]
